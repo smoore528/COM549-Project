@@ -91,16 +91,16 @@ function display_registration_form() {
 		  <input class="form-control" required="yes" type="text" name="regemailaddress" size="50">
 		</div>
 		<div class="form-group">
-		  <label for="email">Name:</label>
+		  <label for="username">Name:</label>
 		  <input class="form-control" required="yes" type="text" name="username" size="50">
 		</div>
 		<div class="form-group">
 		  <label for="pwd">Password:</label>
-		  <input type="password" class="form-control" id="regpwd">
+		  <input type="password" class="form-control" name="regpwd">
 		</div>
 		<div class="form-group">
 		  <label for="pwdconf">Confirm Password:</label>
-		  <input type="password" class="form-control" id="regpwdconf">
+		  <input type="password" class="form-control" name="regpwdconf">
 		</div>
 	  </div>
 	  <div class="col-sm-4"></div>	
@@ -143,7 +143,17 @@ function display_nav() {
       <li><a href="#">Page 2</a></li>
       <li><a href="#">Page 3</a></li>
     </ul>
-	<p class="navbar-text navbar-right">Logged in as...<span class="glyphicon glyphicon-user"></span></p>
+	<p class="navbar-text navbar-right">Logged in as 
+	<?php
+	/*
+	NEED TO FIGURE THIS OUT
+	$conn = db_connect();
+	$sql = "SELECT username FROM surveyusers WHERE username = ";
+	$result = $conn->query($sql);
+	echo $result;
+	*/
+	?>
+	<span class="glyphicon glyphicon-user"></span></p>
   </div>
 </nav>
 </div>
