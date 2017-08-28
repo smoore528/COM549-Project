@@ -50,11 +50,11 @@ function display_login_form() {
 		<div class="form-group">
 		<form action="portal.php" method="post">
 		  <label for="usr">Username:</label>
-		  <input type="text" class="form-control" id="usr">
+		  <input type="text" class="form-control" name="usr">
 		</div>
 		<div class="form-group">
 		  <label for="pwd">Password:</label>
-		  <input type="password" class="form-control" id="pwd">
+		  <input type="password" class="form-control" name="pwd">
 		</div>
 	  </div>
 	  <div class="col-sm-4"></div>	
@@ -122,6 +122,28 @@ function display_success_notification($msg) {
   <strong>Success!</strong> <?php echo $msg ?>
 </div>
 <div class="col-sm-4"></div>
+</div>
+<?php
+}
+
+function display_error_message($msg) {
+?>
+<div class="row">
+<div class="col-sm-4"></div>	
+<div class="col-sm-4 alert alert-danger">
+  <strong>Error!</strong> <?php echo $msg ?>
+</div>
+<div class="col-sm-4"></div>
+</div>
+<?php
+}
+
+function display_button($link, $text) {
+?>
+<div align="center">
+	
+<a href="<?php echo $link ?>" class="btn btn-primary" role="button"><?php echo $text ?></a>
+
 </div>
 <?php
 }
