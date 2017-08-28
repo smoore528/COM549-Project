@@ -3,4 +3,5 @@
   include_once('output_fns.php');
   include_once('user_auth_fns.php');
   include_once('question_fns.php');
+  include_once('chart_fns.php');
 ?>
