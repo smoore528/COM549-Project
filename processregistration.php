@@ -32,15 +32,30 @@ do_html_header();
 				// connect to db
 				 $conn = db_connect();
 				 
+				 //Create entry in USERS table
 				 $sql = "INSERT INTO surveyusers (username, email, userpassword)
 					VALUES ('$username','$email','" .sha1($pwd)."')";
 
 					if ($conn->query($sql) === TRUE) {
-						echo "New record created successfully!<br><br>";
+						echo "";
 					} else {
 						echo "Error: " . $sql . "<br>" . $conn->error;
 					}
+				
+				//Create entry in RESULTS!! table.
+				//We do this so that we can then "edit" the result when the user answers the survey
+				$sql = "INSERT INTO surveyresults (email)
+					VALUES ('$email')";
+
+					if ($conn->query($sql) === TRUE) {
+						echo "";
+					} else {
+						echo "Error: " . $sql . "<br>" . $conn->error;
+					}
+				
 				$conn->close();	
+				display_login_form();
+				echo display_success_notification("You have now registered and may log in");
 			  } else{
 				  display_button("register.php","Return to previous page");
 			  }

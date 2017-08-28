@@ -18,10 +18,9 @@ if (($_POST['usr']) && ($_POST['pwd'])) {
     if (login($username, $passwd)) {
       // if they are in the database register the user id
       $_SESSION['logged_in'] = $username;
-	  echo "success";
 
    } else {
-      // unsuccessful login#
+      // unsuccessful login
 	  echo "<br>";
       display_error_message("You could not be logged in.");
       display_button('index.php', 'Login');

@@ -11,6 +11,11 @@
   if(isset($_POST['regemailaddress'])) {
 	echo display_success_notification("You have now registered and may log in");
 	}
+	
+	if(isset($_SESSION['logged_in'])) {
+	//log the user out if they are already logged in
+	unset($_SESSION['logged_in']);
+	}
 
 
   do_html_footer();

@@ -50,11 +50,11 @@ function display_login_form() {
 		<div class="form-group">
 		<form action="portal.php" method="post">
 		  <label for="usr">Username:</label>
-		  <input type="text" class="form-control" name="usr">
+		  <input type="text" class="form-control" required="yes" name="usr">
 		</div>
 		<div class="form-group">
 		  <label for="pwd">Password:</label>
-		  <input type="password" class="form-control" name="pwd">
+		  <input type="password" class="form-control" required="yes" name="pwd">
 		</div>
 	  </div>
 	  <div class="col-sm-4"></div>	
@@ -165,17 +165,14 @@ function display_nav() {
       <li><a href="#">Page 2</a></li>
       <li><a href="#">Page 3</a></li>
     </ul>
-	<p class="navbar-text navbar-right">Logged in as 
-	<?php
-	/*
-	NEED TO FIGURE THIS OUT
-	$conn = db_connect();
-	$sql = "SELECT username FROM surveyusers WHERE username = ";
-	$result = $conn->query($sql);
-	echo $result;
-	*/
-	?>
-	<span class="glyphicon glyphicon-user"></span></p>
+	<ul class="nav navbar-nav navbar-right">
+      <li><a href="#"><span class="glyphicon glyphicon-user"></span> 
+	  <?php
+	  echo $_SESSION['logged_in'];
+	  ?>
+	  </a></li>
+      <li><a href="index.php"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
+    </ul>
   </div>
 </nav>
 </div>
