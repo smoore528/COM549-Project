@@ -32,10 +32,10 @@ function display_charts(){
         data.addColumn('string', 'Times');
         data.addColumn('number', 'Result');
         data.addRows([
-          ['< Once', <?php echo getData("Q1",1)?>],
-          ['Once', <?php echo getData("Q1",2)?>],
-          ['Twice', <?php echo getData("Q1",3)?>],
-          ['3+', <?php echo getData("Q1",4)?>]
+          ['< Once', <?php echo get_data("Q1",1)?>],
+          ['Once', <?php echo get_data("Q1",2)?>],
+          ['Twice', <?php echo get_data("Q1",3)?>],
+          ['3+', <?php echo get_data("Q1",4)?>]
         ]);
 
         // Set options for Q1 pie chart.
@@ -56,12 +56,12 @@ function display_charts(){
         data.addColumn('string', 'Stores');
         data.addColumn('number', 'Result');
         data.addRows([
-          ['Tesco', <?php echo getData("Q2",1)?>],
-          ['Asda', <?php echo getData("Q2",2)?>],
-          ['Sainsburys', <?php echo getData("Q2",3)?>],
-          ['Lidl', <?php echo getData("Q2",4)?>],
-		  ['M&S', <?php echo getData("Q2",5)?>],
-		  ['Other', <?php echo getData("Q2",6)?>]
+          ['Tesco', <?php echo get_data("Q2",1)?>],
+          ['Asda', <?php echo get_data("Q2",2)?>],
+          ['Sainsburys', <?php echo get_data("Q2",3)?>],
+          ['Lidl', <?php echo get_data("Q2",4)?>],
+		  ['M&S', <?php echo get_data("Q2",5)?>],
+		  ['Other', <?php echo get_data("Q2",6)?>]
         ]);
 
         // Set options for Q2's pie chart.
@@ -81,11 +81,11 @@ function display_charts(){
         data.addColumn('string', 'Money');
         data.addColumn('number', 'Result');
         data.addRows([
-          ['< £30', <?php echo getData("Q3",1)?>],
-          ['£30 - £40', <?php echo getData("Q3",2)?>],
-          ['£40 - £50', <?php echo getData("Q3",3)?>],
-          ['£50-60', <?php echo getData("Q3",4)?>],
-		  ['£60+', <?php echo getData("Q3",5)?>]
+          ['< £30', <?php echo get_data("Q3",1)?>],
+          ['£30 - £40', <?php echo get_data("Q3",2)?>],
+          ['£40 - £50', <?php echo get_data("Q3",3)?>],
+          ['£50 - £60', <?php echo get_data("Q3",4)?>],
+		  ['£60+', <?php echo get_data("Q3",5)?>]
         ]);
 
         // Set options for Q2's pie chart.
@@ -105,8 +105,8 @@ function display_charts(){
         data.addColumn('string', 'Mode');
         data.addColumn('number', 'Result');
         data.addRows([
-          ['In-store', <?php echo getData("Q4",1)?>],
-          ['On-line', <?php echo getData("Q4",2)?>]
+          ['In-store', <?php echo get_data("Q4",1)?>],
+          ['On-line', <?php echo get_data("Q4",2)?>]
         ]);
 
         // Set options for Q4 pie chart.
@@ -130,11 +130,11 @@ function display_charts(){
         data.addColumn('string', 'Method');
         data.addColumn('number', 'Result');
         data.addRows([
-          ['Car', <?php echo getData("Q5",1)?>],
-          ['Bus', <?php echo getData("Q5",2)?>],
-          ['Train', <?php echo getData("Q5",3)?>],
-          ['Walking', <?php echo getData("Q5",4)?>],
-		  ['Other', <?php echo getData("Q5",5)?>]
+          ['Car', <?php echo get_data("Q5",1)?>],
+          ['Bus', <?php echo get_data("Q5",2)?>],
+          ['Train', <?php echo get_data("Q5",3)?>],
+          ['Walking', <?php echo get_data("Q5",4)?>],
+		  ['Other', <?php echo get_data("Q5",5)?>]
         ]);
 
         // Set options for Q2's pie chart.
@@ -159,19 +159,19 @@ function display_charts(){
 			<div class="col-sm-4">
 			<div id="Q1_chart_div" style="width: 100%;"></div>
 			<div class="well well-sm">
-			Your answer:
+			Your answer: <?php echo get_answer("Q1");?>
 			</div>
 			</div>	
 			<div class="col-sm-4">
 			<div id="Q2_chart_div" style="width: 100%;"></div>
 			<div class="well well-sm">
-			Your answer:
+			Your answer: <?php echo get_answer("Q2");?>
 			</div>
 			</div>
 			<div class="col-sm-4">
 			<div id="Q3_chart_div" style="width: 100%;"></div>
 			<div class="well well-sm">
-			Your answer:
+			Your answer: <?php echo get_answer("Q3");?>
 			</div>
 			</div>
 		</div>
@@ -179,20 +179,17 @@ function display_charts(){
 			<div class="col-sm-4">
 			<div id="Q4_chart_div" style="width: 100%;"></div>
 			<div class="well well-sm">
-			Your answer:
+			Your answer: <?php echo get_answer("Q4");?>
 			</div>
 			</div>
 			<div class="col-sm-4">
 			<div id="Q5_chart_div" style="width: 100%;"></div>
 			<div class="well well-sm">
-			Your answer:
+			Your answer: <?php echo get_answer("Q5");?>
 			</div>
 			</div>
 			<div class="col-sm-4">
 			<div id="Q6_chart_div" style="width: 100%;"></div>
-			<div class="well well-sm">
-			Your answer:
-			</div>
 			</div>
 		</div>
 		
@@ -207,7 +204,7 @@ function display_charts(){
 do_html_footer();
 }
 
-function getData($question, $answer){
+function get_data($question, $answer){
 	$conn = db_connect();
 				 
 	
@@ -217,6 +214,106 @@ function getData($question, $answer){
 	echo $number;
 	
 	$conn->close();	
+}
+
+function get_answer($question){
+	
+	$email = $_SESSION['logged_in'];
+	$conn = db_connect();
+	$sql = "SELECT $question FROM surveyresults WHERE email = '$email'";
+	$result = $conn->query($sql);
+	  if ($result->num_rows>0)
+	  {
+		  while ($row = $result->fetch_assoc()) {
+			convert_answer($question, $row[$question]);
+		}
+	  } else {
+		  return false;
+	  }
+	$conn->close();	
+}
+
+function convert_answer($question, $answer){
+	if ($question == "Q1"){
+		if($answer==1){
+			echo "< Once";
+		}
+		if($answer==2){
+			echo "Once";
+		}
+		if($answer==3){
+			echo "Twice";
+		}
+		if($answer==4){
+			echo "3+";
+		}
+	}
+	
+	if ($question == "Q2"){
+		if($answer==1){
+			echo "Tesco";
+		}
+		if($answer==2){
+			echo "Asda";
+		}
+		if($answer==3){
+			echo "Sainsburys";
+		}
+		if($answer==4){
+			echo "Lidl";
+		}
+		if($answer==5){
+			echo "M&S";
+		}
+		if($answer==6){
+			echo "Other";
+		}
+	}
+	
+	if ($question == "Q3"){
+		if($answer==1){
+			echo "<£30";
+		}
+		if($answer==2){
+			echo "£30 - £40";
+		}
+		if($answer==3){
+			echo "£40 - £50";
+		}
+		if($answer==4){
+			echo "£50 - £60";
+		}
+		if($answer==5){
+			echo "£60+";
+		}
+	}
+	
+	if ($question == "Q4"){
+		if($answer==1){
+			echo "In-store";
+		}
+		if($answer==2){
+			echo "On-line";
+		}
+	}
+	
+	if ($question == "Q5"){
+		if($answer==1){
+			echo "Car";
+		}
+		if($answer==2){
+			echo "Bus";
+		}
+		if($answer==3){
+			echo "Train";
+		}
+		if($answer==4){
+			echo "Walking";
+		}
+		if($answer==5){
+			echo "Other";
+		}
+	}
 }
 
 
