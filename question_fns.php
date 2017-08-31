@@ -2,8 +2,12 @@
 require_once('db_fns.php');
 
 function display_progress($progress){
+/*
+Function to display progress bar.
+Takes progress value as a parameter and sets the bar fill and number
+appropriately.
+*/
 ?>
-
 <br>
 <div class="progress" style="width:100%; margin: 0 auto">
   <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
@@ -11,29 +15,42 @@ function display_progress($progress){
     <?php echo $progress ?>% Complete
   </div>
 </div>
-
-
 <?php
 }
 
 function store_answer($question, $answer){
+	/*
+	Function to store the submitted answer into the database.
+	Accepts question and answer as a parameter so that the function
+	can be generic and used for all questions.
+	*/
 	
+	//Get users email from session var
 	$email = $_SESSION['logged_in'];
-
+	//connect to db
 	$conn = db_connect();
 				 
-	//Create entry in USERS table
+	//Update entry in USERS table for that particular user
 	$sql = "UPDATE surveyresults SET $question = '$answer' WHERE surveyresults.email = '$email'";
 	if ($conn->query($sql) === TRUE) {
 		echo '';
 	} else {
+		//display message if error
 		echo "Error: " . $sql . "<br>" . $conn->error;
 		}
 	$conn->close();	
 }
 
 function option_selected($question, $answer){
-	
+/*
+Function to return the option that the user has stored in the database.
+Takes question and answer as parameter so that it can be generic and used
+for all questions.
+The reason for needing this function is that when the user returns to the survey
+I want them to see the results that they left the last time. This function
+queries the database for the user's response and prints a "checked" in the radio
+button to select it if successful.
+*/	
 	$email = $_SESSION['logged_in'];
 	$conn = db_connect();
 	$sql = "SELECT $question FROM surveyresults WHERE email = '$email' and $question = '$answer'";
@@ -44,11 +61,13 @@ function option_selected($question, $answer){
 	  } else {
 		  return false;
 	  }
-	$conn->close();				
-	
+	$conn->close();					
 }
 
 function display_Q1(){
+/*
+HTML function to display Q1
+*/
 ?>
 
 <div class="row">
@@ -111,6 +130,9 @@ function display_Q1(){
 }
 
 function display_Q2(){
+/*
+HTML function to display Q2
+*/
 ?>
 
 <div class="row">
@@ -187,6 +209,9 @@ function display_Q2(){
 }
 
 function display_Q3(){
+/*
+HTML function to display Q3
+*/
 ?>
 
 <div class="row">
@@ -257,6 +282,9 @@ function display_Q3(){
 }
 
 function display_Q4(){
+/*
+HTML function to display Q4
+*/
 ?>
 
 <div class="row">
@@ -305,6 +333,9 @@ function display_Q4(){
 }
 
 function display_Q5(){
+/*
+HTML function to display Q5
+*/
 ?>
 
 <div class="row">
@@ -374,6 +405,10 @@ function display_Q5(){
 }
 
 function display_completed_survey(){
+/*
+Function to store Q5 result and display a page informing the user that the survey is
+complete.
+*/
 ?>
 
 <div class="row">
@@ -385,8 +420,6 @@ function display_completed_survey(){
   <h3>Survey Complete!</h3>
   <p>Thank you! You have now completed the survey</p>
   <p>Click <a href="dashboard.php">here</a> to view the results.</p>
-
-  
   </div>
 </div>
 </div>

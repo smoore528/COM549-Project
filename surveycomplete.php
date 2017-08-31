@@ -3,14 +3,12 @@
   session_start();
   
   do_html_header('Home');
-  
-	if (check_logged_in()) {
-		
+	//If user is logged in, show content
+	if (check_logged_in()) {	
 		echo "<br>";
 		//Store the answer to the previous question
 		$answer = $_POST['optionsRadios'];
-		store_answer("Q5",$answer);
-		
+		store_answer("Q5",$answer);		
 		display_completed_survey();
 		
 	} else {
@@ -19,7 +17,5 @@
 		display_button("index.php", "Log in");
 	}
   
-  
-
   do_html_footer();
 ?>
